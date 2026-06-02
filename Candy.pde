@@ -13,20 +13,20 @@ class Candy {
     this.targetY = startY;
   }
 
-  void setTarget(float tx, float ty) {
+  public void setTarget(float tx, float ty) {
     this.targetX = tx;
     this.targetY = ty;
   }
 
-  boolean isMoving() {
+  public boolean isMoving() {
     return dist(x, y, targetX, targetY) > 0.5; 
   }
 
-  boolean isShrinking() {
+  public boolean isShrinking() {
     return isMatched && scale > 0;
   }
 
-  void update() {
+  public void update() {
     // 1. If it's a match, smoothly shrink it down to zero
     if (isMatched && scale > 0) {
       scale -= 0.1; // Animation speed for breaking
@@ -43,7 +43,7 @@ class Candy {
     }
   }
 
-  void display(float size) {
+  public void display(float size) {
     if (scale <= 0) return; // Don't draw if fully crushed
 
     pushMatrix();
