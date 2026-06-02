@@ -8,7 +8,7 @@ class Board {
   private int score = 0;
 
   // The State Machine: 0 = Playable, 1 = Crushing Animation, 2 = Dropping Animation
-  int gameState = 0; 
+  private int gameState = 0; 
 
   Board(int r, int c) {
     this.rows = r;
@@ -17,7 +17,7 @@ class Board {
     initializeBoard();
   }
 
-  void updateAnimations() {
+  public void updateAnimations() {
     boolean isAnythingShrinking = false;
     boolean isAnythingMoving = false;
 
@@ -50,7 +50,7 @@ class Board {
     }
   }
 
-  void display() {
+ public void display() {
     // Draw tiles first (background)
     for (int i = 0; i < rows; i++) for (int j = 0; j < cols; j++) grid[i][j].display();
     
@@ -62,7 +62,7 @@ class Board {
     }
   }
 
-  void initializeBoard() {
+  public void initializeBoard() {
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
         float px = offsetX + j * tileSize;
@@ -79,7 +79,7 @@ class Board {
     }
   }
 
-  boolean createsStartingMatch(int r, int c, int type) {
+  public boolean createsStartingMatch(int r, int c, int type) {
     if (c >= 2 && grid[r][c-1].candy != null && grid[r][c-2].candy != null &&
         grid[r][c-1].candy.type == type && grid[r][c-2].candy.type == type) return true;
     if (r >= 2 && grid[r-1][c].candy != null && grid[r-2][c].candy != null &&
@@ -87,7 +87,7 @@ class Board {
     return false;
   }
 
-  void handleMouseClick(int mx, int my) {
+  public void handleMouseClick(int mx, int my) {
     if (gameState != 0) return; // Block clicks if the board is animating!
 
     int c = int((mx - offsetX) / tileSize);
@@ -115,13 +115,13 @@ class Board {
     }
   }
 
-  boolean isAdjacent(Tile t1, Tile t2) {
+  public boolean isAdjacent(Tile t1, Tile t2) {
     int rDiff = abs(t1.r - t2.r);
     int cDiff = abs(t1.c - t2.c);
     return (rDiff == 1 && cDiff == 0) || (rDiff == 0 && cDiff == 1);
   }
 
-  void swapCandies(Tile t1, Tile t2) {
+  public void swapCandies(Tile t1, Tile t2) {
     Candy c1 = t1.getCandy();
     Candy c2 = t2.getCandy();
     t1.setCandy(c2);
@@ -140,7 +140,7 @@ class Board {
     }
   }
 
-  boolean scanAndMarkMatches() {
+  public boolean scanAndMarkMatches() {
     boolean foundMatch = false;
     
     // Reset flags
@@ -179,7 +179,7 @@ class Board {
     return foundMatch;
   }
 
-  void removeMatches() {
+  public void removeMatches() {
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
         if (grid[i][j].candy != null && grid[i][j].candy.isMatched) {
@@ -190,7 +190,7 @@ class Board {
     }
   }
 
-  void applyGravity() {
+  public void applyGravity() {
     for (int j = 0; j < cols; j++) {
       int writeRow = rows - 1;
       for (int i = rows - 1; i >= 0; i--) {
